@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from '../../styles/main/window.module.scss';
 import Player from './Player';
 import getOverlappingState from '../util/getOverlappingState';
@@ -9,6 +9,11 @@ export default function Window({children}) {
     const [playerPos, setPlayerPos] = useState({x: 0, y: 0});
     const windowRef = useRef(null);
     const playerRef = useRef(null);
+
+    // sets the player to where they currently are; band-aid over the bug where first click has no transition
+    useEffect(() => {
+        setPlayerPos({x: playerRef.current?.getBoundingClientRect().left + playerRef.current?.getBoundingClientRect().width/2, y: playerRef.current?.getBoundingClientRect().top + playerRef.current?.getBoundingClientRect().height/2});
+    }, [playerRef]);
 
     const handleClick = (e) => {
         const overlappingState = getOverlappingState({x: e.clientX, y: e.clientY}, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect());
