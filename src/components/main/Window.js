@@ -14,6 +14,26 @@ export default function Window({children}) {
     useEffect(() => {
         setPlayerPos({x: playerRef.current?.getBoundingClientRect().left + playerRef.current?.getBoundingClientRect().width/2, y: playerRef.current?.getBoundingClientRect().top + playerRef.current?.getBoundingClientRect().height/2});
     }, [playerRef]);
+    
+    // // move player back in bounds of when window resizes
+    useEffect(() => {
+        const currentPlayer = playerRef.current;
+        const currentWindow = windowRef.current;
+        const repositionPlayer = () => {
+            if (currentPlayer && currentWindow) {
+                const currentPos = {x: playerRef.current?.getBoundingClientRect().left + playerRef.current?.getBoundingClientRect().width/2, y: playerRef.current?.getBoundingClientRect().top + playerRef.current?.getBoundingClientRect().height/2};
+                const overlappingState = getOverlappingState(currentPos, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect());
+                if (!isOverlapping(overlappingState)) {
+                    const newPos = preventOverlap(currentPos, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect(), overlappingState);
+                    setPlayerPos(newPos);
+                }
+            }
+        };
+    
+        window.addEventListener('resize', repositionPlayer);
+        repositionPlayer();
+        return () => currentPlayer && currentWindow && window.removeEventListener('resize', repositionPlayer);
+    }, [playerRef, windowRef]);
 
     const handleClick = (e) => {
         const overlappingState = getOverlappingState({x: e.clientX, y: e.clientY}, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect());
