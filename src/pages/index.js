@@ -18,7 +18,7 @@ export default function Home() {
                     <Building src={club} alt="club" />
                     <Building src={shop} alt="shop" />
                 </div>
-                <Image className={styles.floor} src={floor} alt="floor" />
+                <Image className={styles.floor} src={floor} alt="floor" draggable="false" />
             </Window>
         </>
     );

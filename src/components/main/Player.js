@@ -16,6 +16,6 @@ export default function Player({playerPos, playerRef}) {
     }
 
     return (
-        <Image src={player} alt="the player" height={100} style={playerStyle} ref={playerRef} />
+        <Image src={player} alt="the player" draggable="false" height={100} style={playerStyle} ref={playerRef} />
     );
 }
