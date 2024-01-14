@@ -13,7 +13,7 @@ export default function Building({src, alt}) {
             {/* add sizes prop to the building here later to scale it depending on screen width */}
             <Image src={src} alt={alt} draggable="false" height={300} ref={(el) => {setDoorRightPos(el?.getBoundingClientRect().width / 2);}} />
             <button style={{right: `calc(${doorRightPos}px - 14px)`}} className={styles.door}>
-                <Image src={doorClosed ? door : doorOpen} alt="door" draggable="false" height={50} onMouseEnter={()=>{setDoorClosed(false)}} onMouseLeave={()=>{setDoorClosed(true)}} />
+                <Image src={doorClosed ? door : doorOpen} alt="door" draggable="false" height={75} onMouseEnter={()=>{setDoorClosed(false)}} onMouseLeave={()=>{setDoorClosed(true)}} />
             </button>
         </div>
     )
