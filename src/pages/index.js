@@ -10,7 +10,7 @@ import floor from '../images/floor.png';
 
 export default function Home() {
     return (
-        <div>
+        <>
             <Navbar/>
             <Window>
                 <div className={styles.buildings}>
@@ -20,6 +20,6 @@ export default function Home() {
                 </div>
                 <Image className={styles.floor} src={floor} alt="floor" />
             </Window>
-        </div>
+        </>
     );
 }
