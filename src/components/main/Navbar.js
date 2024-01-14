@@ -9,6 +9,8 @@ export default function Home() {
     return (
         <nav>
             <button onClick={() => {handleClick('/')}}>Home</button>
+            <button onClick={() => {handleClick('/cafe')}}>Cafe</button>
+            <button onClick={() => {handleClick('/club')}}>Club</button>
             <button onClick={() => {handleClick('/shop')}}>Shop</button>
         </nav>
     );

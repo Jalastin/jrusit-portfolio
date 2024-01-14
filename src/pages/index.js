@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/main/home.module.scss'
 import Navbar from "../components/main/Navbar";
 import Window from "../components/main/Window";
@@ -13,6 +13,11 @@ export default function Home() {
     const windowRef = useRef(null);
     const playerRef = useRef(null);
     const floorRef = useRef(null);
+
+    useEffect(() => {
+        const floorRect = floorRef.current?.getBoundingClientRect();
+        floorRect && setPlayerPos({x: floorRect.x + floorRect.width/2, y: floorRect.y + floorRect.height/2});
+    }, [floorRef]);
 
     return (
         <>
