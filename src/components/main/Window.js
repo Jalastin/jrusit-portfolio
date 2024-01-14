@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from '../../styles/main/window.module.scss';
 import Player from './Player';
 import getOverlappingState from '../util/getOverlappingState';
@@ -34,8 +34,7 @@ export default function Window({children, playerPos, setPlayerPos, windowRef, pl
         return () => currentPlayer && currentWindow && window.removeEventListener('resize', repositionPlayer);
     }, [playerRef, windowRef, setPlayerPos]);
 
-    const stickToFloorTop = (pos) => {
-        const playerRect = playerRef.current?.getBoundingClientRect();
+    const stickToFloorTop = (pos, playerRect) => {
         const floorRect = floorRef.current?.getBoundingClientRect();
         
         if (floorRect.top < pos.y - playerRect.height/2) {
@@ -51,17 +50,17 @@ export default function Window({children, playerPos, setPlayerPos, windowRef, pl
         const overlappingState = getOverlappingState({x: e.clientX, y: e.clientY}, playerRect, windowRect);
         const newPos = isOverlapping(overlappingState) ? {x: e.clientX, y: e.clientY} : preventOverlap({x: e.clientX, y: e.clientY}, playerRect, windowRect, overlappingState);
 
-        if (floorRef.current) {
-            stickToFloorTop(newPos);
+        if (floorRef?.current) {
+            stickToFloorTop(newPos, playerRect);
         } else {
             setPlayerPos(newPos);
         }
     }
 
     return (
-        <div className={styles.container} ref={windowRef} onClick={handleClick}>
+        <main className={styles.container} ref={windowRef} onClick={handleClick}>
             <Player playerPos={playerPos} playerRef={playerRef} />
             {children}
-        </div>
+        </main>
     );
 }

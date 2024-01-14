@@ -7,9 +7,9 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <nav>
             <button onClick={() => {handleClick('/')}}>Home</button>
             <button onClick={() => {handleClick('/shop')}}>Shop</button>
-        </div>
+        </nav>
     );
 }

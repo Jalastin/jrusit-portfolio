@@ -19,9 +19,9 @@ export default function Home() {
             <Navbar/>
             <Window playerPos={playerPos} setPlayerPos={setPlayerPos} windowRef={windowRef} playerRef={playerRef} floorRef={floorRef} >
                 <div className={styles.buildings}>
-                    <Building src={cafe} alt="cafe" />
-                    <Building src={club} alt="club" />
-                    <Building src={shop} alt="shop" />
+                    <Building src={cafe} alt="cafe" href="/cafe" />
+                    <Building src={club} alt="club" href="/club" />
+                    <Building src={shop} alt="shop" href="/shop" />
                 </div>
                 <Floor floorRef={floorRef} />
             </Window>

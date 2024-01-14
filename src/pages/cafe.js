@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import Navbar from "../components/main/Navbar";
 import Window from "../components/main/Window";
 
-export default function Shop() {
+export default function Cafe() {
     const [playerPos, setPlayerPos] = useState({x: 0, y: 0});
     const windowRef = useRef(null);
     const playerRef = useRef(null);
@@ -11,7 +11,7 @@ export default function Shop() {
         <div>
             <Navbar/>
             <Window playerPos={playerPos} setPlayerPos={setPlayerPos} windowRef={windowRef} playerRef={playerRef} >
-                Shop
+                Cafe
             </Window>
         </div>
     );

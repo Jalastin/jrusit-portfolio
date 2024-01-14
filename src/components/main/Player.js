@@ -10,7 +10,6 @@ export default function Player({playerPos, playerRef}) {
         left: playerPos.x - playerWidth/2,
         top: playerPos.y - playerHeight/2,
         border: 'solid 1px black',
-        // transition time must be longer if walking farther away
         transition: 'left 1s, top 1s',
         zIndex: 1,
     }
