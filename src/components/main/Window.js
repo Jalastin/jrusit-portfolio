@@ -8,7 +8,8 @@ import preventOverlap from '../util/preventOverlap';
 export default function Window({children, playerPos, setPlayerPos, windowRef, playerRef, floorRef}) {
     // sets the player to where they currently are; band-aid over the bug where first click has no transition
     useEffect(() => {
-        setPlayerPos({x: playerRef.current?.getBoundingClientRect().left + playerRef.current?.getBoundingClientRect().width/2, y: playerRef.current?.getBoundingClientRect().top + playerRef.current?.getBoundingClientRect().height/2});
+        const playerRect = playerRef.current?.getBoundingClientRect();
+        setPlayerPos({x: playerRect.left + playerRect.width/2, y: playerRect.top + playerRect.height/2});
     }, [playerRef, setPlayerPos]);
     
     // move player back in bounds of when window resizes
@@ -17,10 +18,12 @@ export default function Window({children, playerPos, setPlayerPos, windowRef, pl
         const currentWindow = windowRef.current;
         const repositionPlayer = () => {
             if (currentPlayer && currentWindow) {
-                const currentPos = {x: playerRef.current?.getBoundingClientRect().left + playerRef.current?.getBoundingClientRect().width/2, y: playerRef.current?.getBoundingClientRect().top + playerRef.current?.getBoundingClientRect().height/2};
-                const overlappingState = getOverlappingState(currentPos, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect());
+                const playerRect = playerRef.current?.getBoundingClientRect();
+                const windowRect = windowRef.current?.getBoundingClientRect();
+                const currentPos = {x: playerRect.left + playerRect.width/2, y: playerRect.top + playerRect.height/2};
+                const overlappingState = getOverlappingState(currentPos, playerRect, windowRect);
                 if (!isOverlapping(overlappingState)) {
-                    const newPos = preventOverlap(currentPos, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect(), overlappingState);
+                    const newPos = preventOverlap(currentPos, playerRect, windowRect, overlappingState);
                     setPlayerPos(newPos);
                 }
             }
@@ -43,8 +46,10 @@ export default function Window({children, playerPos, setPlayerPos, windowRef, pl
     }
 
     const handleClick = (e) => {
-        const overlappingState = getOverlappingState({x: e.clientX, y: e.clientY}, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect());
-        const newPos = isOverlapping(overlappingState) ? {x: e.clientX, y: e.clientY} : preventOverlap({x: e.clientX, y: e.clientY}, playerRef.current?.getBoundingClientRect(), windowRef.current?.getBoundingClientRect(), overlappingState);
+        const playerRect = playerRef.current?.getBoundingClientRect();
+        const windowRect = windowRef.current?.getBoundingClientRect();
+        const overlappingState = getOverlappingState({x: e.clientX, y: e.clientY}, playerRect, windowRect);
+        const newPos = isOverlapping(overlappingState) ? {x: e.clientX, y: e.clientY} : preventOverlap({x: e.clientX, y: e.clientY}, playerRect, windowRect, overlappingState);
 
         if (floorRef.current) {
             stickToFloorTop(newPos);
