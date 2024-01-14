@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import styles from '../../styles/main/window.module.scss';
 import Player from './Player';
 import getOverlappingState from '../util/getOverlappingState';
 import isOverlapping from '../util/isOverlapping';
 import preventOverlap from '../util/preventOverlap';
+import floor from '../../images/floor.png';
 
 export default function Window({children}) {
     const [playerPos, setPlayerPos] = useState({x: 0, y: 0});
@@ -15,7 +17,7 @@ export default function Window({children}) {
         setPlayerPos({x: playerRef.current?.getBoundingClientRect().left + playerRef.current?.getBoundingClientRect().width/2, y: playerRef.current?.getBoundingClientRect().top + playerRef.current?.getBoundingClientRect().height/2});
     }, [playerRef]);
     
-    // // move player back in bounds of when window resizes
+    // move player back in bounds of when window resizes
     useEffect(() => {
         const currentPlayer = playerRef.current;
         const currentWindow = windowRef.current;
@@ -48,8 +50,11 @@ export default function Window({children}) {
 
     return (
         <div className={styles.container} ref={windowRef} onClick={handleClick}>
-            {children}
             <Player playerPos={playerPos} playerRef={playerRef} />
+            <div className={styles.children}>
+                {children}
+            </div>
+            <Image className={styles.floor} src={floor} alt="floor" />
         </div>
     );
 }
