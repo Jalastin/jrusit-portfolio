@@ -12,6 +12,7 @@ export default function Player({playerPos, playerRef}) {
         border: 'solid 1px black',
         // transition time must be longer if walking farther away
         transition: 'left 1s, top 1s',
+        zIndex: 1,
     }
 
     return (
